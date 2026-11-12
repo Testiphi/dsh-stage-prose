@@ -1,0 +1,8 @@
+{
+  "pluginRelease": "1.0.0-rc.1",
+  "declaredDshRange": ">=0.2.1-rc.3 <0.3.0-0",
+  "checks": {
+    "0.2.1-rc.3": ["source review", "Chromium contract fixture"],
+    "0.2.2-rc.1": ["shipped client review", "Chromium contract fixture", "isolated Web package install and host/client load"]
+  }
+}

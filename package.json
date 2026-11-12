@@ -1,0 +1,62 @@
+{
+  "name": "dsh-stage-prose",
+  "version": "1.0.0-rc.1",
+  "type": "module",
+  "description": "Progress narration and readable collapsed turns for DeepSeek Harness.",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.1-rc.3 <0.3.0-0"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "index.js",
+    "core",
+    "client.js",
+    "cordis.patch.yml",
+    "defaults",
+    "locale",
+    "icon.svg",
+    "README.md",
+    "README.zh.md",
+    "CHANGELOG.md",
+    "compat/ledger.json"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Testiphi/dsh-stage-prose.git"
+  },
+  "icon": "./icon.svg",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node test/smoke.mjs && node --test test/config.mjs test/contract.mjs",
+    "prepack": "node scripts/build.mjs --check"
+  },
+  "devDependencies": {
+    "playwright": "1.65.0"
+  }
+}

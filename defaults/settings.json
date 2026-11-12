@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "enabled": true,
+  "everySteps": 3,
+  "debugLog": false
+}
