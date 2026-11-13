@@ -2,7 +2,14 @@
   "pluginRelease": "1.0.0-rc.1",
   "declaredDshRange": ">=0.2.1-rc.3 <0.3.0-0",
   "checks": {
-    "0.2.1-rc.3": ["source review", "Chromium contract fixture"],
+    "0.2.1-rc.3": ["source review", "Chromium contract fixture", "isolated Web package install and host/client load"],
     "0.2.2-rc.1": ["shipped client review", "Chromium contract fixture", "isolated Web package install and host/client load"]
+  },
+  "evidence": {
+    "0.2.1-rc.3": {
+      "checkedOn": "2026-11-13",
+      "tarballSha512": "2LOqEdMEWFNvNjNjt6vckD6FSSj6iO6+mcnpYvns0rkb+P58epPJ9LvBJBXBN5DFWlj3z9HbLt+yeXq1DIQq6A==",
+      "observations": ["bundle present in the fresh Web profile", "host mount logged in diagnostics.log", "Stage Prose stylesheet injected into the live Web UI in Chromium"]
+    }
   }
 }
