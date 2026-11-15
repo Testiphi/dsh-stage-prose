@@ -6,6 +6,14 @@ Stage Prose asks the model to give brief progress updates during longer tasks. I
 
 ### Installation
 
+**Web via npm.** Install the prerelease into the Web profile, then restart the Web host:
+
+```sh
+dsh plugin --profile web add dsh-stage-prose@next --save-exact
+```
+
+**Tarball.**
+
 Use a prebuilt `dsh-stage-prose-1.0.0-rc.1.tgz`, or run `npm pack` from the source checkout to create it. In the commands below, replace the example with the absolute path to your tarball. On Windows, use a path such as `E:/Downloads/dsh-stage-prose-1.0.0-rc.1.tgz`.
 
 **Desktop.** Open DeepSeek Harness Desktop once to initialize its profile, then fully quit it from the application menu. Use the app's bundled CLI. Register it via **Manage dsh Command…** and open a new terminal, or invoke `resources/runtime/cli/bin/dsh` (`dsh.cmd` on Windows) directly from the installation directory. The npm-installed DSH CLI cannot manage the desktop profile.
@@ -16,7 +24,7 @@ dsh plugin --profile desktop add "file:/absolute/path/to/dsh-stage-prose-1.0.0-r
 
 Reopen Desktop after installation. Keep the tarball at a stable path for future installs from the profile's saved dependency.
 
-**Web.** Use the Web CLI with `--profile web` in the install command, then restart the Web host. The declared DSH range controls loading. The ledger records what was verified for each version.
+For a Web tarball install, use the Web CLI with `--profile web` in the install command, then restart the Web host. The declared DSH range controls loading. The ledger records what was verified for each version.
 
 ### Settings and upgrading
 

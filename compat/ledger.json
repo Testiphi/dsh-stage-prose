@@ -3,7 +3,8 @@
   "declaredDshRange": ">=0.2.1-rc.3 <0.3.0-0",
   "checks": {
     "0.2.1-rc.3": ["source review", "Chromium contract fixture", "isolated Web package install and host/client load"],
-    "0.2.2-rc.1": ["shipped client review", "Chromium contract fixture", "isolated Web package install and host/client load"]
+    "0.2.2-rc.1": ["shipped client review", "Chromium contract fixture", "isolated Web package install and host/client load", "isolated Web session regression from npm"],
+    "0.2.2-rc.3": ["isolated Web package install and host/client load", "isolated Web session regression from npm"]
   },
   "evidence": {
     "0.2.1-rc.3": {
@@ -11,5 +12,20 @@
       "tarballSha512": "2LOqEdMEWFNvNjNjt6vckD6FSSj6iO6+mcnpYvns0rkb+P58epPJ9LvBJBXBN5DFWlj3z9HbLt+yeXq1DIQq6A==",
       "observations": ["bundle present in the fresh Web profile", "host mount logged in diagnostics.log", "Stage Prose stylesheet injected into the live Web UI in Chromium"]
     }
+  },
+  "npmWebSessionRegression": {
+    "checkedOn": "2026-11-15",
+    "package": "dsh-stage-prose@1.0.0-rc.1",
+    "integrity": "sha512-E8COLFNSY1H/dww1lz8+lU+OKwFKrezn49Jv4kNBJIrJ3VF672iy1XBjkqGjcUlo7p882CpvOYEZtuivwg7iuw==",
+    "method": "Fresh Web profiles with registry installs, real DSH sessions in Chromium, and a local scripted OpenAI-compatible model endpoint.",
+    "versions": {
+      "0.2.2-rc.1": "passed",
+      "0.2.2-rc.3": "passed"
+    },
+    "observations": [
+      "Three reasoning-and-tool steps without written output triggered one reminder in the fourth model request. The following request retained that reminder in context without a second injection.",
+      "With Work details set to Standard and Replies After Collapse set to All replies, the completed turn kept the progress text and final reply visible while all four reasoning rows and four tool rows were folded.",
+      "With the plugin stylesheet disabled in Chromium, the host's default All replies setting still kept the progress text visible on both versions."
+    ]
   }
 }
