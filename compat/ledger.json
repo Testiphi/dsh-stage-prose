@@ -27,5 +27,18 @@
       "With Work details set to Standard and Replies After Collapse set to All replies, the completed turn kept the progress text and final reply visible while all four reasoning rows and four tool rows were folded.",
       "With the plugin stylesheet disabled in Chromium, the host's default All replies setting still kept the progress text visible on both versions."
     ]
+  },
+  "marketWebSessionRegression": {
+    "checkedOn": "2026-11-16",
+    "package": "dsh-stage-prose@1.0.0-rc.1",
+    "method": "Fresh Web profiles, real DSH sessions in Chromium, and a local scripted OpenAI-compatible model endpoint.",
+    "sources": {
+      "0.2.2-rc.1": "Market GitHub install command resolved to 8b583c5e0ef1e19172f3444662009428849cd01b without an allowBuilds prompt.",
+      "0.2.2-rc.3": "Public npm registry install of 1.0.0-rc.1."
+    },
+    "observations": [
+      "Both versions injected one reminder on the fourth model request after three silent tool steps.",
+      "In Standard with Replies After Collapse set to Final answer only, both versions hid the progress reply with the plugin stylesheet disabled and showed it with the stylesheet enabled. Reasoning and tool rows stayed folded."
+    ]
   }
 }
