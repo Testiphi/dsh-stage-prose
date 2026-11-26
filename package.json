@@ -1,6 +1,6 @@
 {
   "name": "dsh-stage-prose",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "type": "module",
   "description": "Progress narration and readable collapsed turns for DeepSeek Harness.",
   "engines": {

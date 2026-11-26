@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.0-rc.2
 
 - Default to Standard work details, completion-time folding, and Final answer only through the host's native settings. User profile overrides retain precedence.
 - Add an independent `retainProse` setting, defaulting to false for new settings and older settings without an explicit value, with a backup before migration.
