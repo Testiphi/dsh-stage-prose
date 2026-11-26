@@ -1,5 +1,59 @@
 {
   "pluginRelease": "1.0.0-rc.1",
+  "completionDefaultValidation": {
+    "checkedOn": "2026-11-26",
+    "releaseStatus": "Unreleased local candidate",
+    "dshVersion": "0.2.2-rc.5",
+    "method": "Separate fresh and schema-1-upgrade Web profiles, packaged local candidate, Node 24.22.3, Chromium, and a local scripted model. The fixture held the final model response until the browser verified live progress. No ui-chat profile override or manual collapse action was applied.",
+    "observations": [
+      "In both profiles the stage reply was visible while the turn was active, then automatically hidden when the final reply arrived. All four reasoning rows and four tool rows folded, while the final reply remained visible.",
+      "Three silent steps still triggered the Stage Prose reminder on request 4, with Timeline absent.",
+      "Fresh settings used schema 2 and retainProse false. Schema 1 settings migrated to schema 2 and retainProse false, with an exact backup of the original file and custom fields retained.",
+      "Unit coverage also verifies schema-0 migration and preservation of explicit retainProse choices."
+    ]
+  },
+  "unreleasedValidation": {
+    "checkedOn": "2026-11-26",
+    "method": "Fresh isolated Web profiles, local scripted OpenAI-compatible responses, Chromium, and Node 24.22.3. Timeline task reminders were accelerated to 3 iterations and background reports disabled for the overlap test.",
+    "timeline": {
+      "dshVersion": "0.2.3-alpha.2",
+      "publishedBaseline": "Stage Prose 1.0.0-rc.1 and Timeline both contributed reminders in model request 4.",
+      "candidate": "With coordinateTimeline enabled, requests retained Timeline task checkpoints while Stage Prose injected zero maintenance reminders."
+    },
+    "nativeDisplay": {
+      "dshVersion": "0.2.2-rc.5",
+      "allReplies": "Stage text remained visible after collapsing with retainProse disabled and no Stage Prose stylesheet installed.",
+      "finalAnswerOnly": "Stage text was hidden with retainProse false. Changing retainProse to true and reloading the same conversation made it visible. Disabling the injected stylesheet hid it again."
+    }
+  },
+  "pluginCoexistenceValidation": {
+    "checkedOn": "2026-11-26",
+    "dshVersion": "0.2.2-rc.5",
+    "nodeVersion": "24.22.3",
+    "releaseStatus": "Unreleased local candidate",
+    "method": "All listed plugins installed together in a new isolated Web profile. Real DSH loop and Chromium with a local scripted model endpoint. Timeline absent, retainProse false, native Standard / All replies.",
+    "plugins": {
+      "billion-context": "0.1.216",
+      "dsh-context": "0.87.1",
+      "dsh-cost-meter": "1.9.92",
+      "dsh-side-chat": "GitHub Release v1.2.1 prebuilt tarball from xlennart/dsh-side-chat",
+      "cc-safety-net": "2.8.3",
+      "dsh-better-sidebar": "0.33.0"
+    },
+    "observations": [
+      "Without Timeline, Stage Prose injected one reminder in model request 4 after three silent tool steps; four read tool results remained in subsequent model history.",
+      "The native folded transcript retained progress text with no Stage Prose stylesheet, and Chromium reported no page errors.",
+      "CC Safety Net blocked a git reset --hard tool call with rule git.reset-hard in the disposable non-repository workspace; the guard result reached the next model request.",
+      "Cost Meter mounted and wrote its ledger in the isolated home.",
+      "The Side Chat split panel opened alongside the main conversation. Main and side silence counters are isolated by session id in the regression tests."
+    ],
+    "limitations": [
+      "This validates combined loading, ordinary model/tool turns, and one safety rule. Compression thresholds, context-overflow recovery, and paid-provider accounting accuracy require separate acceptance.",
+      "Side Chat send acceptance is unresolved: the session log recorded the submitted inbox message followed by turn/end with reason blocked before a model call. The same result occurred after removing Stage Prose from the profile's bundle list. This does not establish full Side Chat compatibility or identify the cause.",
+      "The Cost Meter integration preview and DSH preview notice overlapped during repeated fresh-browser runs. The test dismissed these informational guides programmatically before continuing.",
+      "The npm dsh-side-chat@0.1.2 client manifest targets the removed dsh-client-runtime. This run used the author's DSH 0.2-compatible v1.2.1 release instead."
+    ]
+  },
   "declaredDshRange": ">=0.2.1-rc.3 <0.3.0-0",
   "checks": {
     "0.2.1-rc.3": ["source review", "Chromium contract fixture", "isolated Web package install and host/client load"],

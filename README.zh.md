@@ -2,7 +2,7 @@
 
 [English](README.md) · [兼容记录](compat/ledger.json)
 
-插件提示模型在长任务里简短说明进度。连续几步没有正文时，宿主会给模型补一条提醒。在「标准」工作步骤视图中，回合折叠后仍显示过程正文，思考和工具细节留在折叠组内。
+插件提示模型在长任务里简短说明进度。连续几步没有正文时，宿主会给模型补一条提醒。任务中显示阶段正文，完成后与思考、工具行一起折叠，只保留最终结果。也可选择在完成后继续保留阶段正文。
 
 ### 安装
 
@@ -27,6 +27,14 @@ dsh plugin --profile desktop add "file:/absolute/path/to/dsh-stage-prose-1.0.0-r
 Web 端也可通过 tarball 安装。使用 Web CLI，将 tarball 安装命令中的 `--profile desktop` 换为 `--profile web`，安装后重启 Web 宿主。兼容范围用于控制宿主加载，逐版本验证结果见兼容记录。
 
 ### 配置与升级
+
+插件默认将原生「工作步骤展示」设为「标准」、收起时机设为「完成时」、收起后的回复设为「仅最终回答」。任务中显示阶段正文，回合完成后与工具行一起折叠。DSH profile 或 home 设置中的显式用户配置优先于插件默认值。
+
+`retainProse` 单独控制浏览器样式，默认 `false`。设为 `true` 后，完成并收起时阶段正文仍会保留。修改后刷新页面生效。schema 0 或 1 的旧设置会先备份，再迁移到 schema 2；缺少正文开关时设置 `retainProse: false`，已有显式开关值和自定义设置予以保留。
+
+`coordinateTimeline` 默认 `true`。检测到已启用的官方或独立版 Timeline 加载项，且当前智能体能使用它的规划工具时，由 Timeline 负责维护提醒，阶段输出保留固定的进度播报指导。设为 `false` 可同时使用两套提醒。
+
+Timeline 未安装或已停用时，阶段输出按自己的 `everySteps` 阈值独立提醒。兼容记录列出了上下文、费用、侧聊、安全与侧栏插件共同安装时的确切版本和实测路径。DSH 0.2 的组合验证使用 Side Chat 的 GitHub 预构建 v1.2.1 发行包。
 
 配置放在 `$DSH_HOME/plugin-data/dsh-stage-prose/`，没有设置 `DSH_HOME` 时用 `~/.dsh`。编辑 `guidance.md` 可调整主提示；在 `settings.json` 中，`enabled` 只控制静默提醒，`everySteps` 默认 3（允许 1–50），`debugLog` 默认关闭。也可设置 `tailReminder`、`reminderZh` 和 `reminderEn`。配置改动无需重启，提醒会作为插件上下文写入本机会话记录。
 

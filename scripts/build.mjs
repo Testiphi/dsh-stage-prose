@@ -10,6 +10,7 @@ window.__ModuleLoader__.load({
     return {
       apply(ctx) {
         ctx.effect(() => {
+          if (globalThis.__DSH_STAGE_PROSE__?.retainProse !== true) return
           const style = document.createElement('style')
           style.id = ${JSON.stringify(pkg.name)}
           style.textContent = ${JSON.stringify(stylesheet)}

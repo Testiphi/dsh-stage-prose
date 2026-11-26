@@ -1,3 +1,8 @@
 - insert:
     - id: stage-prose
       name: dsh-stage-prose
+- id: ui-chat
+  config:
+    transcriptView: standard
+    collapseTiming: completion
+    foldedReplies: final

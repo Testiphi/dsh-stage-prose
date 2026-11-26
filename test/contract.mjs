@@ -13,6 +13,7 @@ for (const version of ['0.2.1-rc.3', '0.2.2-rc.1']) {
     await page.setContent(readFileSync(new URL('./fixtures/dsh-' + version + '.html', import.meta.url), 'utf8'))
     const visibility = (selector) => page.locator(selector).evaluate((node) => getComputedStyle(node).contentVisibility)
     assert.equal(await visibility('#prose'), 'hidden')
+    await page.evaluate(() => { globalThis.__DSH_STAGE_PROSE__ = { retainProse: true } })
     await page.evaluate((name) => {
       window.__ModuleLoader__ = { load(module) {
         if (module.id !== name) throw new Error('Wrong client module ID')
@@ -27,5 +28,10 @@ for (const version of ['0.2.1-rc.3', '0.2.2-rc.1']) {
     if (version === '0.2.2-rc.1') assert.equal(await visibility('#prose [hidden]'), 'hidden')
     await page.evaluate(() => window.disposeStageProse())
     assert.equal(await visibility('#prose'), 'hidden')
+    await page.evaluate(() => { globalThis.__DSH_STAGE_PROSE__ = { retainProse: false } })
+    await page.addScriptTag({ content: readFileSync(client, 'utf8') })
+    assert.equal(await visibility('#prose'), 'hidden')
+    assert.equal(await visibility('#final'), 'visible')
+    assert.equal(await page.locator('style#dsh-stage-prose').count(), 0)
   })
 }

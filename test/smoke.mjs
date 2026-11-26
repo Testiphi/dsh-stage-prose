@@ -34,8 +34,11 @@ try {
   writeFileSync(SETTINGS_PATH, JSON.stringify({ schemaVersion: 1, enabled: true, everySteps: 3, debugLog: true }, null, 2))
 
   const sections = []
-  const events = { session: [], preStep: [], disposed: [] }
+  const events = { session: [], preStep: [], disposed: [], index: [] }
+  const loaderEntries = []
+  let tools
   const fakeCtx = {
+    get(name) { return name === 'loader' ? { entries: () => loaderEntries } : name === 'tools' ? tools : undefined },
     systemPrompt: {
       section(definition) { sections.push(definition); return () => {} },
       getSectionOrder(name) { return name === 'WEB_SURFACE' ? 10100 : undefined },
@@ -44,7 +47,8 @@ try {
     on(name, handler) {
       const bucket = name === 'session/event' ? events.session
         : name === 'agent/pre-step' ? events.preStep
-          : name === 'session/disposed' ? events.disposed : undefined
+          : name === 'session/disposed' ? events.disposed
+            : name === 'webserver/index-inject' ? events.index : undefined
       if (bucket !== undefined) bucket.push(handler)
       return () => {}
     },
@@ -63,6 +67,9 @@ try {
 
   check('session/event listener registered', events.session.length === 1)
   check('agent/pre-step listener registered', events.preStep.length === 1)
+  const injections = []
+  events.index[0](injections)
+  check('legacy settings default to native completion folding', injections[0]?.value.retainProse === false)
   check('mount log written', existsSync(join(data, 'diagnostics.log'))
     && readFileSync(join(data, 'diagnostics.log'), 'utf8').includes('mount'))
 
@@ -127,6 +134,35 @@ try {
   silent(); silent()
   decision = await preStep(10, 3)
   check('everySteps from settings.json applies', decision.messages.length === 1)
+
+  const timeline = { disabled: false, options: { name: '@deepseek-ai/dsh-timeline' } }
+  loaderEntries.push(timeline)
+  silent(); silent()
+  check('Timeline owns maintenance reminders while enabled', (await preStep(10, 5)).messages.length === 0)
+  tools = { get: () => undefined }
+  check('a session without Timeline planning tools keeps its own reminder', (await preStep(10, 5)).messages.length === 1)
+  tools = undefined
+  silent(); silent()
+  timeline.disabled = true
+  check('disabled Timeline leaves Stage Prose reminders active', (await preStep(10, 6)).messages.length === 1)
+  timeline.disabled = false
+  writeFileSync(SETTINGS_PATH, JSON.stringify({ schemaVersion: 2, enabled: true, everySteps: 2, coordinateTimeline: false }))
+  silent(); silent()
+  check('Timeline coordination can be disabled explicitly', (await preStep(10, 8)).messages.length === 1)
+
+  silent(); silent()
+  const blocked = { kind: 'stop', reason: 'approval-required' }
+  const stopped = await events.preStep[0]({ agent: { session }, turn: 10, step: 9 }, async () => blocked)
+  check('other plugin stop decisions pass through unchanged', stopped === blocked)
+  const contextMessage = { id: 'context-plugin-message', role: 'user', content: [{ type: 'text', text: 'Compacted context' }], source: { kind: 'context-test' } }
+  const upstream = { kind: 'enter', messages: [contextMessage], marker: 'preserve upstream fields' }
+  const combined = await events.preStep[0]({ agent: { session }, turn: 10, step: 10 }, async () => upstream)
+  check('upstream context and decision fields survive reminder injection', combined.messages[0] === contextMessage && combined.marker === upstream.marker && combined.messages.length === 2)
+  check('upstream message array is not mutated', upstream.messages.length === 1)
+  const sideSession = { id: 'session-side-chat', header: { origin: 'user' } }
+  events.session[0](sideSession, { type: 'turn/start' })
+  const sideDecision = await events.preStep[0]({ agent: { session: sideSession }, turn: 1, step: 1 }, async () => ({ kind: 'enter', messages: [] }))
+  check('a separate side conversation does not inherit the main silence counter', sideDecision.messages.length === 0)
 
   const log = readFileSync(join(data, 'diagnostics.log'), 'utf8')
   check('nudge logged', log.includes('nudge session=session-'))

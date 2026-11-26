@@ -2,7 +2,7 @@
 
 [中文](README.zh.md) · [Compatibility evidence](compat/ledger.json)
 
-Stage Prose asks the model to give brief progress updates during longer tasks. If it goes several steps without written text, the host inserts a private reminder into the model context. In the Standard process view, written updates remain visible when a completed turn is folded.
+Stage Prose asks the model to give brief progress updates during longer tasks. If it goes several steps without written text, the host inserts a private reminder into the model context. Progress is visible during the task. On completion, it folds with tools so the final answer stays in view. Keeping progress visible after completion is optional.
 
 ### Installation
 
@@ -28,7 +28,15 @@ For a Web tarball install, use the Web CLI with `--profile web` in the install c
 
 ### Settings and upgrading
 
-Edit `$DSH_HOME/plugin-data/dsh-stage-prose/settings.json` or `guidance.md`. With no `DSH_HOME`, the home is `~/.dsh`. Settings and wording are read on demand. `enabled` controls silent-step reminders; the prompt sections and client styling remain active. `everySteps` is 1–50 (default 3), `debugLog` is off by default, and `tailReminder`, `reminderZh`, and `reminderEn` override the default wording. Reminders are recorded as plugin context in the local session log.
+Edit `$DSH_HOME/plugin-data/dsh-stage-prose/settings.json` or `guidance.md`. With no `DSH_HOME`, the home is `~/.dsh`. Settings and wording are read on demand. `enabled` controls silent-step reminders. `everySteps` is 1–50 (default 3), `debugLog` is off by default, and `tailReminder`, `reminderZh`, and `reminderEn` override the default wording. Reminders are recorded as plugin context in the local session log.
+
+The bundle defaults Work details to Standard, collapse timing to completion, and Replies After Collapse to Final answer only. Progress remains visible during the task and folds with tools when the turn completes. Explicit user overrides in DSH's profile or home settings take precedence over bundle defaults.
+
+`retainProse` independently controls the browser stylesheet and defaults to `false`. Set it to `true` to keep progress text visible after completion. Reload the page after changing it. Settings from schema 0 or 1 are backed up and migrated to schema 2 with `retainProse: false` when that field was absent. Explicit values and custom settings are preserved.
+
+`coordinateTimeline` defaults to `true`. While an enabled official or standalone Timeline loader entry is present and its planning tools are available to the current agent, Timeline owns maintenance reminders and Stage Prose contributes its fixed narration guidance. Set this option to `false` to retain both reminder mechanisms.
+
+With Timeline absent or disabled, Stage Prose uses its own `everySteps` reminder threshold. The compatibility ledger records exact versions and tested paths for the combined context, cost, side-chat, safety, and sidebar plugins. The DSH 0.2 coexistence check uses Side Chat's prebuilt v1.2.1 GitHub release.
 
 To upgrade from `@local/dsh-stage-prose`, fully quit Desktop or stop the Web host. In your terminal, use the same `DSH_HOME` as that app. If the app uses the default `~/.dsh`, you can leave it unset. The importer is available in the source checkout and requires the old plugin directory containing both `settings.json` and `guidance.md`. From the checkout, run:
 

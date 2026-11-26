@@ -56,6 +56,10 @@ export function apply(ctx) {
   const settings = readSettings()
   const log = createLogger(dir, readSettings)
 
+  ctx.effect(() => ctx.on('webserver/index-inject', (table) => {
+    table.push({ kind: 'global', name: '__DSH_STAGE_PROSE__', value: { retainProse: readSettings().retainProse } })
+  }), 'stage-prose.client-settings')
+
   ctx.effect(() => ctx.systemPrompt.section({
     name: 'deployment:stage-report',
     order: MAIN_SECTION_ORDER,
@@ -114,6 +118,11 @@ export function apply(ctx) {
     const current = readSettings()
     if (!current.enabled) return decision
     const agent = payload?.agent
+    const tools = ctx.get?.('tools')
+    const timelineAvailable = tools === undefined || tools.get('timeline_tree', agent) !== undefined
+    if (current.coordinateTimeline && timelineAvailable && [...(ctx.get?.('loader')?.entries() ?? [])].some(entry =>
+      !entry.disabled && ['@deepseek-ai/dsh-timeline', '@magolor/dsh-timeline'].includes(entry.options.name.replace(/^cordis:/u, ''))
+    )) return decision
     const session = agent?.session
     if (isSubagent(session)) return decision
     const state = stateOf(session)

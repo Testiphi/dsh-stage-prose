@@ -1,6 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "enabled": true,
+  "retainProse": false,
+  "coordinateTimeline": true,
   "everySteps": 3,
   "debugLog": false
 }

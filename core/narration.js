@@ -2,6 +2,8 @@ import { randomUUID } from 'node:crypto'
 
 export const DEFAULTS = {
   enabled: true,
+  retainProse: false,
+  coordinateTimeline: true,
   everySteps: 3,
   debugLog: false,
   tailReminder: '汇报提醒：调工具不等于汇报。连续几步只有工具调用时，先写一两句进度（在做什么、刚完成什么）再继续。',

@@ -5,9 +5,10 @@ import { join } from 'node:path'
 import { DEFAULTS } from './narration.js'
 
 const defaults = new URL('../defaults/', import.meta.url)
-const currentVersion = 1
+const currentVersion = 2
 const migrations = {
   0: (value) => ({ ...value, schemaVersion: 1 }),
+  1: (value) => ({ ...value, retainProse: value.retainProse ?? false, schemaVersion: 2 }),
 }
 
 export function dataDirectory(home = process.env.DSH_HOME || join(homedir(), '.dsh')) {
@@ -67,7 +68,7 @@ export function openConfig() {
       const parsed = migrate(settingsPath, text, value)
       if (!parsed) return DEFAULTS
       const settings = { ...DEFAULTS }
-      for (const key of ['enabled', 'debugLog']) {
+      for (const key of ['enabled', 'debugLog', 'retainProse', 'coordinateTimeline']) {
         if (typeof parsed[key] === 'boolean') settings[key] = parsed[key]
       }
       if (Number.isInteger(parsed.everySteps) && parsed.everySteps >= 1 && parsed.everySteps <= 50) {
