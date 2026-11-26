@@ -1,5 +1,21 @@
 {
   "pluginRelease": "1.0.0-rc.2",
+  "npmRc2ReleaseValidation": {
+    "checkedOn": "2026-11-26",
+    "sourceCommit": "5a9a421cd19349cd22abf2d1c99d53374063df5c",
+    "package": "dsh-stage-prose@1.0.0-rc.2",
+    "integrity": "sha512-B67V26ZwxzBG3i+Tr3VbSr59Eqwkx/PDftAtFTOd2egeHxWd2iY5XdldYaqmqkuDCfLD8eX2nWegxxEyEENvfw==",
+    "observedTags": { "next": "1.0.0-rc.2", "latest": "1.0.0-rc.1" },
+    "dshVersion": "0.2.2-rc.5",
+    "nodeVersion": "24.22.3",
+    "method": "Public-registry exact-version installs in independent fresh and rc.1-upgrade Web profiles, Chromium, and a local scripted model endpoint. The final model response was held until live progress visibility was asserted.",
+    "observations": [
+      "Both installs matched the published version and lockfile integrity. Live progress was visible, then automatically folded on completion with four reasoning rows and four tool rows. The final answer stayed visible without a manual collapse action.",
+      "The upgrade profile first installed rc.1. Its schema-1 settings survived package installation and migrated at host activation with an exact backup, retainProse false, custom fields retained, and custom guidance unchanged.",
+      "Three silent steps triggered one Stage Prose reminder on model request 4 in both profiles, with Timeline absent.",
+      "In this environment, @next initially selected rc.1 under the installer's release-age policy. A profile-local minimumReleaseAgeExclude entry for dsh-stage-prose@1.0.0-rc.2 made @next resolve to rc.2. Exact-version installs added this same version-specific exception automatically."
+    ]
+  },
   "completionDefaultValidation": {
     "checkedOn": "2026-11-26",
     "releaseStatus": "Unreleased local candidate",
