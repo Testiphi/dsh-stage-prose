@@ -1,6 +1,6 @@
 {
   "name": "dsh-stage-prose",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "type": "module",
   "description": "Live, non-intrusive progress updates every N silent steps during long DeepSeek Harness tasks, with auto-folding on completion and Timeline coordination.",
   "engines": {

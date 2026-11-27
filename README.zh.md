@@ -27,12 +27,12 @@ dsh plugin --profile web add dsh-stage-prose@next --save-exact
 
 **通过 tarball 安装。**
 
-使用预构建的 `dsh-stage-prose-1.0.0-rc.2.tgz`，或在源码仓库中运行 `npm pack` 生成。请将命令中的示例替换为 tarball 的绝对路径。Windows 路径可写成 `E:/Downloads/dsh-stage-prose-1.0.0-rc.2.tgz`。
+使用预构建的 `dsh-stage-prose-1.0.0-rc.3.tgz`，或在源码仓库中运行 `npm pack` 生成。请将命令中的示例替换为 tarball 的绝对路径。Windows 路径可写成 `E:/Downloads/dsh-stage-prose-1.0.0-rc.3.tgz`。
 
 **桌面端。** 先启动一次 DeepSeek Harness Desktop 以初始化 profile，再从应用菜单彻底退出。用应用附带的 CLI。可以通过应用菜单的「管理 dsh 命令…」注册后打开新终端，也可以直接调用安装目录中的 `resources/runtime/cli/bin/dsh`（Windows 为 `dsh.cmd`）。通过 npm 安装的 DSH CLI 无法管理桌面 profile。
 
 ```sh
-dsh plugin --profile desktop add "file:/absolute/path/to/dsh-stage-prose-1.0.0-rc.2.tgz" --save-exact
+dsh plugin --profile desktop add "file:/absolute/path/to/dsh-stage-prose-1.0.0-rc.3.tgz" --save-exact
 ```
 
 安装后重新打开桌面应用。请把 tarball 保存在固定路径，供 profile 按已保存的依赖重新安装时使用。

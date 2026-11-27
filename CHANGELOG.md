@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-rc.3
+
+- Refresh bilingual feature introductions and npm discovery metadata, including homepage and issue links.
+
 ## 1.0.0-rc.2
 
 - Default to Standard work details, completion-time folding, and Final answer only through the host's native settings. User profile overrides retain precedence.
