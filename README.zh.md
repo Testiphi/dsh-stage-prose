@@ -49,12 +49,12 @@ dsh plugin --profile web add dsh-stage-prose@next --save-exact
 
 **通过 tarball 安装。**
 
-使用预构建的 `dsh-stage-prose-1.0.0-rc.3.tgz`，或在源码仓库中运行 `npm pack` 生成。请将命令中的示例替换为 tarball 的绝对路径。Windows 路径可写成 `E:/Downloads/dsh-stage-prose-1.0.0-rc.3.tgz`。
+使用预构建的 `dsh-stage-prose-1.0.0-rc.4.tgz`，或在源码仓库中运行 `npm pack` 生成。请将命令中的示例替换为 tarball 的绝对路径。Windows 路径可写成 `E:/Downloads/dsh-stage-prose-1.0.0-rc.4.tgz`。
 
 **桌面端。** 先启动一次 DeepSeek Harness Desktop 以初始化 profile，再从应用菜单彻底退出。用应用附带的 CLI。可以通过应用菜单的「管理 dsh 命令…」注册后打开新终端，也可以直接调用安装目录中的 `resources/runtime/cli/bin/dsh`（Windows 为 `dsh.cmd`）。通过 npm 安装的 DSH CLI 无法管理桌面 profile。
 
 ```sh
-dsh plugin --profile desktop add "file:/absolute/path/to/dsh-stage-prose-1.0.0-rc.3.tgz" --save-exact
+dsh plugin --profile desktop add "file:/absolute/path/to/dsh-stage-prose-1.0.0-rc.4.tgz" --save-exact
 ```
 
 安装后重新打开桌面应用。请把 tarball 保存在固定路径，供 profile 按已保存的依赖重新安装时使用。
@@ -63,13 +63,13 @@ Web 端也可通过 tarball 安装。使用 Web CLI，将 tarball 安装命令�
 
 ### 配置与升级
 
-**原生设置页（开发中，尚未发布到 npm）：** 打开 DSH「插件」→「阶段输出 / Stage Prose」的配置区。前面是静默提醒、连续静默步数、完成后正文保留和 Timeline 协同；展开「高级设置」可修改主提示词、中英文提醒、尾部指导和调试日志。设置与主提示词分别保存。
+**原生设置页（1.0.0-rc.4 起提供）：** 打开 DSH「插件」→「阶段输出 / Stage Prose」的配置区。前面是静默提醒、连续静默步数、完成后正文保留和 Timeline 协同；展开「高级设置」可修改主提示词、中英文提醒、尾部指导和调试日志。设置与主提示词分别保存。
 
 页面直接读写下述 `settings.json` 与 `guidance.md`，不另存一套配置。保存后，后续模型步骤按新配置执行；正文保留开关立即应用到当前页面。仍可手动编辑文件：页面无未保存修改时会定期重新读取；有草稿时保留草稿，若文件已被外部修改则拒绝覆盖，需先「重新读取」。
 
 插件默认将原生「工作步骤展示」设为「标准」、收起时机设为「完成时」、收起后的回复设为「仅最终回答」。任务中显示阶段正文，回合完成后与工具行一起折叠。DSH profile 或 home 设置中的显式用户配置优先于插件默认值。
 
-`retainProse` 单独控制浏览器样式，默认 `false`。设为 `true` 后，完成并收起时阶段正文仍会保留。手动修改后刷新页面生效；通过候选版设置页保存时立即更新当前页面。schema 0 或 1 的旧设置会先备份，再迁移到 schema 2；缺少正文开关时设置 `retainProse: false`，已有显式开关值和自定义设置予以保留。
+`retainProse` 单独控制浏览器样式，默认 `false`。设为 `true` 后，完成并收起时阶段正文仍会保留。手动修改后刷新页面生效；通过设置页保存时立即更新当前页面。schema 0 或 1 的旧设置会先备份，再迁移到 schema 2；缺少正文开关时设置 `retainProse: false`，已有显式开关值和自定义设置予以保留。
 
 `coordinateTimeline` 默认 `true`。检测到已启用的官方或独立版 Timeline 加载项，且当前智能体能使用它的规划工具时，由 Timeline 负责维护提醒，阶段输出保留固定的进度播报指导。设为 `false` 可同时使用两套提醒。
 

@@ -1,5 +1,5 @@
 {
-  "pluginRelease": "1.0.0-rc.3",
+  "pluginRelease": "1.0.0-rc.4",
   "settingsPageValidation": {
     "checkedOn": "2026-11-27",
     "releaseStatus": "Unreleased local candidate; npm rc.3 is unchanged",

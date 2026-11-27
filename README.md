@@ -49,12 +49,12 @@ dsh plugin --profile web add dsh-stage-prose@next --save-exact
 
 **Tarball.**
 
-Use a prebuilt `dsh-stage-prose-1.0.0-rc.3.tgz`, or run `npm pack` from the source checkout to create it. In the commands below, replace the example with the absolute path to your tarball. On Windows, use a path such as `E:/Downloads/dsh-stage-prose-1.0.0-rc.3.tgz`.
+Use a prebuilt `dsh-stage-prose-1.0.0-rc.4.tgz`, or run `npm pack` from the source checkout to create it. In the commands below, replace the example with the absolute path to your tarball. On Windows, use a path such as `E:/Downloads/dsh-stage-prose-1.0.0-rc.4.tgz`.
 
 **Desktop.** Open DeepSeek Harness Desktop once to initialize its profile, then fully quit it from the application menu. Use the app's bundled CLI. Register it via **Manage dsh Command…** and open a new terminal, or invoke `resources/runtime/cli/bin/dsh` (`dsh.cmd` on Windows) directly from the installation directory. The npm-installed DSH CLI cannot manage the desktop profile.
 
 ```sh
-dsh plugin --profile desktop add "file:/absolute/path/to/dsh-stage-prose-1.0.0-rc.3.tgz" --save-exact
+dsh plugin --profile desktop add "file:/absolute/path/to/dsh-stage-prose-1.0.0-rc.4.tgz" --save-exact
 ```
 
 Reopen Desktop after installation. Keep the tarball at a stable path for future installs from the profile's saved dependency.
@@ -63,7 +63,7 @@ For a Web tarball install, use the Web CLI with `--profile web` in the install c
 
 ### Settings and upgrading
 
-**Native settings page (in development; not yet on npm):** Open DSH **Plugins → Stage Prose** and its configuration section. Silent-step reminders, consecutive silent steps, retained stage text, and Timeline coordination come first. Expand **Advanced settings** for main guidance, bilingual reminders, tail guidance, and diagnostic logging. Settings and main guidance are saved separately.
+**Native settings page (since 1.0.0-rc.4):** Open DSH **Plugins → Stage Prose** and its configuration section. Silent-step reminders, consecutive silent steps, retained stage text, and Timeline coordination come first. Expand **Advanced settings** for main guidance, bilingual reminders, tail guidance, and diagnostic logging. Settings and main guidance are saved separately.
 
 The page edits the same `settings.json` and `guidance.md` files below, without a second configuration store. Saved settings apply to subsequent model steps; prose visibility updates immediately on the current page. Manual file editing remains supported. A clean page periodically rereads the files; unsaved drafts are preserved, and saving refuses to overwrite external changes until you reload the files.
 
@@ -71,7 +71,7 @@ Edit `$DSH_HOME/plugin-data/dsh-stage-prose/settings.json` or `guidance.md`. Wit
 
 The bundle defaults Work details to Standard, collapse timing to completion, and Replies After Collapse to Final answer only. Progress remains visible during the task and folds with tools when the turn completes. Explicit user overrides in DSH's profile or home settings take precedence over bundle defaults.
 
-`retainProse` independently controls the browser stylesheet and defaults to `false`. Set it to `true` to keep progress text visible after completion. Reload the page after editing the file manually; saving through the candidate settings page updates the current page immediately. Settings from schema 0 or 1 are backed up and migrated to schema 2 with `retainProse: false` when that field was absent. Explicit values and custom settings are preserved.
+`retainProse` independently controls the browser stylesheet and defaults to `false`. Set it to `true` to keep progress text visible after completion. Reload the page after editing the file manually; saving through the settings page updates the current page immediately. Settings from schema 0 or 1 are backed up and migrated to schema 2 with `retainProse: false` when that field was absent. Explicit values and custom settings are preserved.
 
 `coordinateTimeline` defaults to `true`. While an enabled official or standalone Timeline loader entry is present and its planning tools are available to the current agent, Timeline owns maintenance reminders and Stage Prose contributes its fixed narration guidance. Set this option to `false` to retain both reminder mechanisms.
 

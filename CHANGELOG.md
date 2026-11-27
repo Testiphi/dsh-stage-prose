@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.0-rc.4
 
 - Normalize generated client inputs to LF so Windows and Linux builds pass the same packaging check.
 - Add a bilingual native plugin settings page with common controls first and prompt/debug controls under Advanced settings. Keep settings.json and guidance.md as the sole source, with hot reload, separate saves, and external-edit conflict protection.
