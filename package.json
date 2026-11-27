@@ -2,7 +2,7 @@
   "name": "dsh-stage-prose",
   "version": "1.0.0-rc.2",
   "type": "module",
-  "description": "Progress narration and readable collapsed turns for DeepSeek Harness.",
+  "description": "Live, non-intrusive progress updates every N silent steps during long DeepSeek Harness tasks, with auto-folding on completion and Timeline coordination.",
   "engines": {
     "node": "^22.19.0 || >=24.0.0",
     "dsh": ">=0.2.1-rc.3 <0.3.0-0"
@@ -40,6 +40,10 @@
     "type": "git",
     "url": "git+https://github.com/Testiphi/dsh-stage-prose.git"
   },
+  "homepage": "https://github.com/Testiphi/dsh-stage-prose#readme",
+  "bugs": {
+    "url": "https://github.com/Testiphi/dsh-stage-prose/issues"
+  },
   "icon": "./icon.svg",
   "license": "MIT",
   "publishConfig": {
@@ -49,7 +53,15 @@
   "keywords": [
     "deepseek-harness",
     "dsh",
-    "dsh-plugin"
+    "dsh-plugin",
+    "progress-updates",
+    "progress-narration",
+    "stage-prose",
+    "step-progress",
+    "live-status",
+    "long-tasks",
+    "auto-fold",
+    "agent-workflow"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",

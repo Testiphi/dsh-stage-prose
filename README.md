@@ -2,7 +2,18 @@
 
 [中文](README.zh.md) · [Compatibility evidence](compat/ledger.json)
 
-Stage Prose asks the model to give brief progress updates during longer tasks. If it goes several steps without written text, the host inserts a private reminder into the model context. Progress is visible during the task. On completion, it folds with tools so the final answer stays in view. Keeping progress visible after completion is optional.
+**Live, non-intrusive progress updates during long multi-step tasks, with auto-folding on completion to keep final answers clean.**
+
+**Stage Prose** keeps you informed while DeepSeek Harness runs complex workflows. After a configurable number of consecutive steps without visible text, the host adds a private context reminder asking the model for a brief progress update, without requiring another user message or a separate model request. Progress stays visible during execution and folds alongside reasoning and tool rows on completion by default.
+
+> ⭐ If Stage Prose makes long tasks easier to follow, please consider giving this repo a **Star** to support ongoing DSH version adaptation and compatibility testing.
+
+### Why Stage Prose?
+
+- **Progress after every N silent steps (`everySteps: 1–50`, default `3`)**. A reminder enters the next request after N consecutive steps without visible text. Written updates reset the counter, and reminders stay within the existing execution flow.
+- **Live visibility and auto-folding on completion**. Native defaults use Standard work details, completion-time folding, and Final answer only. Set `retainProse: true` to keep stage text visible after completion. Explicit DSH display preferences take precedence.
+- **Hot-reload prompt and bilingual reminder customization**. Edit `guidance.md` and the `reminderEn`, `reminderZh`, and `tailReminder` settings on demand with no restart required. Reload the page after changing the prose-retention switch.
+- **Timeline coordination and versioned coexistence evidence**. With `coordinateTimeline: true`, an enabled Timeline installation owns maintenance reminders when its planning tools are available to the current agent. Recorded combined tests cover context, cost, safety, side-chat, and sidebar plugins, with unresolved side-chat sending and untested paths documented. See the [compatibility ledger](compat/ledger.json).
 
 ### Installation
 
