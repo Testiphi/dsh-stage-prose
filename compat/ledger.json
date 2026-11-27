@@ -1,8 +1,31 @@
 {
   "pluginRelease": "1.0.0-rc.4",
+  "npmRc4ReleaseValidation": {
+    "checkedOn": "2026-11-27",
+    "sourceCommit": "aeeef343f31138dd31a5d14564385411b2b2c71a",
+    "package": "dsh-stage-prose@1.0.0-rc.4",
+    "integrity": "sha512-aVVQl0pn3AJtXg5lsv1X2veHL5YbMdYsJRObebrd0zWxGv0E1BVvFma2eRbPfx0CdV/5sukArp+ki4rJcXdlag==",
+    "observedTags": { "latest": "1.0.0-rc.4", "next": "1.0.0-rc.4" },
+    "dshVersion": "0.2.2-rc.5",
+    "nodeVersion": "24.22.3",
+    "method": "Public npm registry exact-version installs in three independent temporary Web homes: fresh install, rc.3 upgrade with schema-2 settings, and rc.3 upgrade with a legacy schema-1 file. Chromium exercised the native settings page and the real DSH tool loop using a local scripted model endpoint. Installed lockfile integrity matched the reviewed release tarball in all three homes.",
+    "observations": [
+      "Fresh settings used schema 2, everySteps 3, and retainProse false. The schema-2 upgrade retained everySteps 7, explicit retainProse true, a custom field, and existing guidance. Installing the new package did not overwrite either configuration file.",
+      "The legacy schema-1 file migrated to schema 2 with retainProse false and an exact original backup. Custom settings and guidance survived the upgrade.",
+      "All three native pages saved common settings and advanced prompts independently. Settings saves retained an unsaved guidance draft. Manual file edits hot-reloaded, stale saves preserved external edits and the UI draft, and saved settings survived browser reload.",
+      "Saved guidance and tail wording appeared in subsequent model requests without restarting the host. With everySteps set to 2 and Timeline absent, one custom reminder was injected on request 3 after two silent tool steps.",
+      "Live stage text remained visible until the final response, then automatically folded along with all four reasoning rows and four tool rows. No manual collapse was used. Retention styling also switched immediately when saved from the page.",
+      "Anonymous settings requests returned 401 and untrusted-Origin requests returned 403. All three Chromium runs reported zero page errors.",
+      "npm and npmmirror both exposed rc.4 with latest and next pointing to it. Separate tag-based installs initially chose rc.2 under release-age policy and cached metadata. A profile-local exception for dsh-stage-prose@1.0.0-rc.4 plus fresh registry metadata resolved both tags to rc.4; exact-version installs added the version-specific exception automatically. Only isolated homes were changed."
+    ],
+    "limitations": [
+      "The rc.4 native settings page was tested on DSH 0.2.2-rc.5 only. Older host evidence does not establish support for this new page.",
+      "Scripted model responses verify transport, reminder timing, configuration effects, and folding. They do not measure an unconstrained model's adherence to narration or output-boundary guidance."
+    ]
+  },
   "settingsPageValidation": {
     "checkedOn": "2026-11-27",
-    "releaseStatus": "Unreleased local candidate; npm rc.3 is unchanged",
+    "releaseStatus": "Local candidate validation before npm 1.0.0-rc.4 publication",
     "dshVersion": "0.2.2-rc.5",
     "nodeVersion": "24.22.3",
     "method": "Locally packed candidate installed into a new isolated Web home, Chromium native plugin configuration UI, and a local scripted OpenAI-compatible endpoint. Reproducible with test/settings-web.mjs; no desktop profile involved.",

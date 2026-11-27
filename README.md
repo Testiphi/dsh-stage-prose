@@ -47,6 +47,8 @@ By default, stage text folds with reasoning and tool calls when the turn complet
 dsh plugin --profile web add dsh-stage-prose@next --save-exact
 ```
 
+For an immediate install of this release, use `dsh plugin --profile web add dsh-stage-prose@1.0.0-rc.4 --save-exact`. Installer release-age policies and cached metadata can temporarily select an older version through `@next` or `@latest`, even when both npm tags already point to rc.4.
+
 **Tarball.**
 
 Use a prebuilt `dsh-stage-prose-1.0.0-rc.4.tgz`, or run `npm pack` from the source checkout to create it. In the commands below, replace the example with the absolute path to your tarball. On Windows, use a path such as `E:/Downloads/dsh-stage-prose-1.0.0-rc.4.tgz`.

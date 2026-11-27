@@ -47,6 +47,8 @@
 dsh plugin --profile web add dsh-stage-prose@next --save-exact
 ```
 
+需要立即安装本次发布时，请使用 `dsh plugin --profile web add dsh-stage-prose@1.0.0-rc.4 --save-exact`。安装器的新版本等待策略和元数据缓存可能让 `@next` 或 `@latest` 暂时选到旧版，即使 npm 上两个标签已指向 rc.4。
+
 **通过 tarball 安装。**
 
 使用预构建的 `dsh-stage-prose-1.0.0-rc.4.tgz`，或在源码仓库中运行 `npm pack` 生成。请将命令中的示例替换为 tarball 的绝对路径。Windows 路径可写成 `E:/Downloads/dsh-stage-prose-1.0.0-rc.4.tgz`。
