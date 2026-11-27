@@ -2,18 +2,20 @@
 
 [中文](README.zh.md) · [Compatibility evidence](compat/ledger.json)
 
-**Live, non-intrusive progress updates during long multi-step tasks, with auto-folding on completion to keep final answers clean.**
+**Live, non-intrusive progress updates during long multi-step tasks—automatically folded on completion so your final answer stays clean.**
 
-**Stage Prose** keeps you informed while DeepSeek Harness runs complex workflows. After a configurable number of consecutive steps without visible text, the host adds a private context reminder asking the model for a brief progress update, without requiring another user message or a separate model request. Progress stays visible during execution and folds alongside reasoning and tool rows on completion by default.
+**Stage Prose** keeps you informed while DeepSeek Harness runs complex, multi-step workflows. Whenever the model goes silent for a configurable number of steps, the host injects a private context reminder asking for a brief progress update—**without pausing execution or interrupting the workflow**. Progress stays visible while the task runs, then automatically collapses alongside reasoning and tool rows once finished.
 
-> ⭐ If Stage Prose makes long tasks easier to follow, please consider giving this repo a **Star** to support ongoing DSH version adaptation and compatibility testing.
+> ⭐ If Stage Prose makes long tasks easier to follow, please consider giving this repo a **Star**! It helps other DSH users discover the plugin and supports ongoing version compatibility testing.
 
 ### Why Stage Prose?
 
-- **Progress after every N silent steps (`everySteps: 1–50`, default `3`)**. A reminder enters the next request after N consecutive steps without visible text. Written updates reset the counter, and reminders stay within the existing execution flow.
-- **Live visibility and auto-folding on completion**. Native defaults use Standard work details, completion-time folding, and Final answer only. Set `retainProse: true` to keep stage text visible after completion. Explicit DSH display preferences take precedence.
-- **Hot-reload prompt and bilingual reminder customization**. Edit `guidance.md` and the `reminderEn`, `reminderZh`, and `tailReminder` settings on demand with no restart required. Reload the page after changing the prose-retention switch.
-- **Timeline coordination and versioned coexistence evidence**. With `coordinateTimeline: true`, an enabled Timeline installation owns maintenance reminders when its planning tools are available to the current agent. Recorded combined tests cover context, cost, safety, side-chat, and sidebar plugins, with unresolved side-chat sending and untested paths documented. See the [compatibility ledger](compat/ledger.json).
+- **Smart Silent-Step Triggers (`everySteps: 1–50`, default `3`)**: Prompts for a progress update only after N consecutive steps without visible text. Written updates reset the counter, helping you follow long tool-heavy workflows.
+- **Live Visibility, Clean Auto-Folding**: Displays stage updates in real time during execution, then folds them with reasoning and tool calls on completion so only the final answer stays in view (or set `retainProse: true` to keep them visible).
+- **Hot-Reload Customization**: Tailor narration style and bilingual reminder prompts (`guidance.md`, `reminderEn`, `reminderZh`, `tailReminder`) on demand with no restart required.
+- **Timeline Coordination & Verified Coexistence**: Automatically coordinates with enabled official or standalone Timeline plugins when their planning tools are available to the current agent (`coordinateTimeline: true`), preventing duplicate maintenance reminders. Tested alongside context, cost, safety, and sidebar plugins, with a versioned [compatibility ledger](compat/ledger.json).
+
+The side-chat panel opens successfully in the tested combination. Side-chat sending has an unresolved acceptance issue, with exact versions and coverage recorded in the compatibility ledger.
 
 ### Installation
 
