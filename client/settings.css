@@ -18,4 +18,3 @@
 .dsh-sp-actions { justify-content: flex-end; margin-top: 20px; }
 .dsh-stage-prose-settings [role=alert] { color: var(--dsw-alias-error-primary, #b42318); }
 .dsh-stage-prose-settings [role=status] { color: var(--dsw-alias-label-secondary, #6b7280); }
-

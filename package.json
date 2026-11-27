@@ -71,7 +71,7 @@
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node test/smoke.mjs && node --test test/config.mjs test/contract.mjs test/settings-api.mjs",
+    "test": "node test/smoke.mjs && node --test test/build.mjs test/config.mjs test/contract.mjs test/settings-api.mjs",
     "test:settings-web": "node test/settings-web.mjs",
     "prepack": "node scripts/build.mjs --check"
   },
