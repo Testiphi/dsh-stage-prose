@@ -63,9 +63,13 @@ Web 端也可通过 tarball 安装。使用 Web CLI，将 tarball 安装命令�
 
 ### 配置与升级
 
+**原生设置页（开发中，尚未发布到 npm）：** 打开 DSH「插件」→「阶段输出 / Stage Prose」的配置区。前面是静默提醒、连续静默步数、完成后正文保留和 Timeline 协同；展开「高级设置」可修改主提示词、中英文提醒、尾部指导和调试日志。设置与主提示词分别保存。
+
+页面直接读写下述 `settings.json` 与 `guidance.md`，不另存一套配置。保存后，后续模型步骤按新配置执行；正文保留开关立即应用到当前页面。仍可手动编辑文件：页面无未保存修改时会定期重新读取；有草稿时保留草稿，若文件已被外部修改则拒绝覆盖，需先「重新读取」。
+
 插件默认将原生「工作步骤展示」设为「标准」、收起时机设为「完成时」、收起后的回复设为「仅最终回答」。任务中显示阶段正文，回合完成后与工具行一起折叠。DSH profile 或 home 设置中的显式用户配置优先于插件默认值。
 
-`retainProse` 单独控制浏览器样式，默认 `false`。设为 `true` 后，完成并收起时阶段正文仍会保留。修改后刷新页面生效。schema 0 或 1 的旧设置会先备份，再迁移到 schema 2；缺少正文开关时设置 `retainProse: false`，已有显式开关值和自定义设置予以保留。
+`retainProse` 单独控制浏览器样式，默认 `false`。设为 `true` 后，完成并收起时阶段正文仍会保留。手动修改后刷新页面生效；通过候选版设置页保存时立即更新当前页面。schema 0 或 1 的旧设置会先备份，再迁移到 schema 2；缺少正文开关时设置 `retainProse: false`，已有显式开关值和自定义设置予以保留。
 
 `coordinateTimeline` 默认 `true`。检测到已启用的官方或独立版 Timeline 加载项，且当前智能体能使用它的规划工具时，由 Timeline 负责维护提醒，阶段输出保留固定的进度播报指导。设为 `false` 可同时使用两套提醒。
 
@@ -82,3 +86,7 @@ node scripts/import-legacy.mjs "/absolute/path/to/old/plugin-directory"
 脚本会打印 `plugin-data/dsh-stage-prose/` 下的目标路径，并只复制缺失的文件。迁移未标注版本的设置前，会在同一目录保存 `settings.json.v0.<id>.bak`。
 
 检查导入结果后，用桌面附带的 CLI 运行 `dsh plugin --profile desktop remove @local/dsh-stage-prose` 移除旧包。Web 端使用 `--profile web`。将新 tarball 安装到同一个 profile，再重新打开应用。卸载新包会保留这些用户文件，供重装时使用。
+
+### 维护验证
+
+原生设置页专项回归：将 `DSH_TEST_CLI` 设为 DSH 的 JavaScript CLI 入口（`bin.js`），将 `STAGE_PROSE_TEST_PACKAGE` 设为本地候选 tarball 的路径，再运行 `npm run test:settings-web`。测试会创建独立的临时 home 和工作区，使用本地脚本模型端点，并在临时目录记录证据，不使用现有 profile。新设置页目前验证到 DSH `0.2.2-rc.5`。

@@ -1,5 +1,25 @@
 {
   "pluginRelease": "1.0.0-rc.3",
+  "settingsPageValidation": {
+    "checkedOn": "2026-11-27",
+    "releaseStatus": "Unreleased local candidate; npm rc.3 is unchanged",
+    "dshVersion": "0.2.2-rc.5",
+    "nodeVersion": "24.22.3",
+    "method": "Locally packed candidate installed into a new isolated Web home, Chromium native plugin configuration UI, and a local scripted OpenAI-compatible endpoint. Reproducible with test/settings-web.mjs; no desktop profile involved.",
+    "observations": [
+      "Common switches and everySteps are shown before the initially collapsed Advanced settings. The page reads and writes the existing settings.json and guidance.md, with no parallel configuration store.",
+      "Schema-1 settings migrated to schema 2 with an exact original backup, everySteps preserved, retainProse false, and an unknown custom field retained through UI saves.",
+      "Settings and main guidance save independently; saving settings does not discard an unsaved guidance draft. Manual file edits are reread while the page is clean. A stale settings save is rejected, preserving both the external file and the UI draft until explicit reload.",
+      "Saved values survived a browser reload and reopening the native plugin page. The retainProse switch added or removed the stylesheet immediately on the current page.",
+      "UI-saved guidance and tail wording entered subsequent model requests without a host restart. With everySteps set to 2, one custom reminder was injected on request 3 after two silent tool steps, with Timeline absent.",
+      "Stage text was visible while the task ran and automatically hidden after the final response, without manual collapse. All four reasoning rows and four tool rows were also hidden.",
+      "Anonymous requests to the settings API returned 401; authenticated requests from an untrusted Origin returned 403. Chromium reported no page errors."
+    ],
+    "limitations": [
+      "The new settings page is verified on DSH 0.2.2-rc.5 only. Earlier loading and transcript evidence elsewhere in this ledger does not establish settings-page support on those versions.",
+      "The model endpoint was scripted to make reminder timing and visibility assertions reproducible; this does not measure a model's adherence to narration guidance."
+    ]
+  },
   "npmRc2ReleaseValidation": {
     "checkedOn": "2026-11-26",
     "sourceCommit": "5a9a421cd19349cd22abf2d1c99d53374063df5c",

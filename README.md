@@ -63,11 +63,15 @@ For a Web tarball install, use the Web CLI with `--profile web` in the install c
 
 ### Settings and upgrading
 
+**Native settings page (in development; not yet on npm):** Open DSH **Plugins → Stage Prose** and its configuration section. Silent-step reminders, consecutive silent steps, retained stage text, and Timeline coordination come first. Expand **Advanced settings** for main guidance, bilingual reminders, tail guidance, and diagnostic logging. Settings and main guidance are saved separately.
+
+The page edits the same `settings.json` and `guidance.md` files below, without a second configuration store. Saved settings apply to subsequent model steps; prose visibility updates immediately on the current page. Manual file editing remains supported. A clean page periodically rereads the files; unsaved drafts are preserved, and saving refuses to overwrite external changes until you reload the files.
+
 Edit `$DSH_HOME/plugin-data/dsh-stage-prose/settings.json` or `guidance.md`. With no `DSH_HOME`, the home is `~/.dsh`. Settings and wording are read on demand. `enabled` controls silent-step reminders. `everySteps` is 1–50 (default 3), `debugLog` is off by default, and `tailReminder`, `reminderZh`, and `reminderEn` override the default wording. Reminders are recorded as plugin context in the local session log.
 
 The bundle defaults Work details to Standard, collapse timing to completion, and Replies After Collapse to Final answer only. Progress remains visible during the task and folds with tools when the turn completes. Explicit user overrides in DSH's profile or home settings take precedence over bundle defaults.
 
-`retainProse` independently controls the browser stylesheet and defaults to `false`. Set it to `true` to keep progress text visible after completion. Reload the page after changing it. Settings from schema 0 or 1 are backed up and migrated to schema 2 with `retainProse: false` when that field was absent. Explicit values and custom settings are preserved.
+`retainProse` independently controls the browser stylesheet and defaults to `false`. Set it to `true` to keep progress text visible after completion. Reload the page after editing the file manually; saving through the candidate settings page updates the current page immediately. Settings from schema 0 or 1 are backed up and migrated to schema 2 with `retainProse: false` when that field was absent. Explicit values and custom settings are preserved.
 
 `coordinateTimeline` defaults to `true`. While an enabled official or standalone Timeline loader entry is present and its planning tools are available to the current agent, Timeline owns maintenance reminders and Stage Prose contributes its fixed narration guidance. Set this option to `false` to retain both reminder mechanisms.
 
@@ -84,5 +88,7 @@ The importer prints the destination under `plugin-data/dsh-stage-prose/`. It cop
 After verifying the imported files, remove the old package with `dsh plugin --profile desktop remove @local/dsh-stage-prose` using the bundled CLI, or use `--profile web` for Web. Install the new tarball into that same profile and reopen the app. To turn off Stage Prose entirely, remove `dsh-stage-prose` from the profile. User files remain available for reinstall.
 
 ### Maintenance
+
+For the opt-in native settings regression, set `DSH_TEST_CLI` to the DSH JavaScript CLI entry (`bin.js`) and `STAGE_PROSE_TEST_PACKAGE` to a locally packed candidate tarball, then run `npm run test:settings-web`. The test creates its own temporary home and workspace, uses a scripted local model endpoint, and records evidence there. It does not use existing profiles. The new settings page has been verified on DSH `0.2.2-rc.5`.
 
 Run `npm ci`, `npx playwright install chromium`, `npm test`, and `npm pack --dry-run`. Run `npm run build` after editing the DOM adapter. Before widening support, install the tarball in a clean profile for the new DSH version, verify host and client loading, and test a folded turn with written progress, reasoning, and tools. Update the version ledger and fixture if the host changes.

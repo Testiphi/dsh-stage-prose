@@ -1,0 +1,21 @@
+.dsh-stage-prose-settings { max-width: 780px; color: var(--dsw-alias-label-primary, inherit); font: inherit; }
+.dsh-stage-prose-settings fieldset { border: 0; padding: 0; margin: 20px 0; min-width: 0; }
+.dsh-stage-prose-settings legend, .dsh-stage-prose-settings summary { font-weight: 600; }
+.dsh-stage-prose-settings summary { cursor: pointer; padding: 16px 0; }
+.dsh-sp-toolbar, .dsh-sp-row, .dsh-sp-actions { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.dsh-sp-toolbar, .dsh-sp-native, .dsh-stage-prose-settings small { color: var(--dsw-alias-label-secondary, #6b7280); font-size: 13px; }
+.dsh-sp-row { padding: 16px 0; border-bottom: 1px solid var(--dsw-alias-border-l3, #e5e7eb); }
+.dsh-stage-prose-settings small, .dsh-sp-label { display: block; }
+.dsh-stage-prose-settings small { line-height: 1.5; margin-top: 5px; }
+.dsh-sp-row input[type=number] { width: 78px; }
+.dsh-sp-row input[type=checkbox] { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--dsw-alias-brand-primary, #365eda); }
+.dsh-sp-prompt { display: block; margin: 14px 0; }
+.dsh-stage-prose-settings textarea, .dsh-stage-prose-settings input[type=number] { font: inherit; color: inherit; background: var(--dsw-alias-bg-base, #fff); border: 1px solid var(--dsw-alias-border-l3, #d1d5db); border-radius: 8px; padding: 9px 12px; }
+.dsh-stage-prose-settings textarea { display: block; width: 100%; resize: vertical; line-height: 1.6; margin-top: 8px; }
+.dsh-stage-prose-settings button { font: inherit; cursor: pointer; border-radius: 8px; padding: 8px 14px; color: inherit; background: var(--dsw-alias-bg-layer-2, #f3f4f6); border: 1px solid var(--dsw-alias-border-l3, #d1d5db); }
+.dsh-stage-prose-settings button:disabled { cursor: default; opacity: .5; }
+.dsh-stage-prose-settings .dsh-sp-primary { background: var(--dsw-alias-brand-primary, #365eda); color: #fff; border-color: transparent; }
+.dsh-sp-actions { justify-content: flex-end; margin-top: 20px; }
+.dsh-stage-prose-settings [role=alert] { color: var(--dsw-alias-error-primary, #b42318); }
+.dsh-stage-prose-settings [role=status] { color: var(--dsw-alias-label-secondary, #6b7280); }
+

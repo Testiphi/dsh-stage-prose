@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync, existsSync, mkdtempSync, mkdirSync, readdi
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { PROGRESS_BOUNDARIES } from '../core/narration.js'
 
 const PLUGIN_DIR = join(fileURLToPath(import.meta.url), '..', '..')
 const INDEX_URL = pathToFileURL(join(PLUGIN_DIR, 'index.js')).href
@@ -64,6 +65,7 @@ try {
   check('main section text', typeof main?.text === 'function' && main.text().includes('过程说明'))
   check('tail section order follows WEB_SURFACE', tail?.order === 10150, String(tail?.order))
   check('tail section text', typeof tail?.text === 'function' && tail.text().includes('汇报提醒'))
+  check('tail includes a boundary against repeating internal instructions', tail.text().endsWith(PROGRESS_BOUNDARIES.zh))
 
   check('session/event listener registered', events.session.length === 1)
   check('agent/pre-step listener registered', events.preStep.length === 1)
@@ -94,6 +96,7 @@ try {
   const reminder = decision.messages[0]
   check('reminder is user-role with plugin source', reminder.role === 'user' && reminder.source.kind === 'stage-prose-nudge')
   check('reminder carries text', reminder.content[0].type === 'text' && reminder.content[0].text.includes('过程提醒'))
+  check('Chinese reminder includes the output boundary', reminder.content[0].text.endsWith(PROGRESS_BOUNDARIES.zh))
   check('reminder is not the user kind', reminder.source.kind !== 'user')
   check('counter resets after the reminder', (await preStep(1, 5)).messages.length === 0)
 
@@ -111,6 +114,7 @@ try {
   check('English session gets the English reminder',
     decision.messages.length === 1 && decision.messages[0].content[0].text.startsWith('(process reminder)'),
     decision.messages[0]?.content[0]?.text)
+  check('English reminder includes the output boundary', decision.messages[0].content[0].text.endsWith(PROGRESS_BOUNDARIES.en))
 
   const child = { id: 'session-child', header: { origin: 'subagent', delegationDepth: 1 } }
   const childEvents = []
@@ -163,6 +167,14 @@ try {
   events.session[0](sideSession, { type: 'turn/start' })
   const sideDecision = await events.preStep[0]({ agent: { session: sideSession }, turn: 1, step: 1 }, async () => ({ kind: 'enter', messages: [] }))
   check('a separate side conversation does not inherit the main silence counter', sideDecision.messages.length === 0)
+
+  writeFileSync(SETTINGS_PATH, JSON.stringify({ schemaVersion: 2, enabled: true, everySteps: 2, coordinateTimeline: false, tailReminder: 'Custom tail', reminderEn: 'Custom progress instruction' }))
+  writeFileSync(join(data, 'guidance.md'), 'Custom guidance')
+  check('custom guidance remains intact', main.text() === 'Custom guidance')
+  check('custom tail retains the fixed output boundary', tail.text() === `Custom tail\n\n${PROGRESS_BOUNDARIES.zh}`)
+  silent(); silent()
+  const customReminder = await preStep(11, 3)
+  check('custom reminder retains the output boundary', customReminder.messages[0]?.content[0]?.text === `Custom progress instruction\n\n${PROGRESS_BOUNDARIES.en}`)
 
   const log = readFileSync(join(data, 'diagnostics.log'), 'utf8')
   check('nudge logged', log.includes('nudge session=session-'))

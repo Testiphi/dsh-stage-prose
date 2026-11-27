@@ -32,6 +32,20 @@ export function initializeData(dir, legacyDir) {
   }
 }
 
+export function settingsFrom(parsed) {
+  const settings = { ...DEFAULTS }
+  for (const key of ['enabled', 'debugLog', 'retainProse', 'coordinateTimeline']) {
+    if (typeof parsed[key] === 'boolean') settings[key] = parsed[key]
+  }
+  if (Number.isInteger(parsed.everySteps) && parsed.everySteps >= 1 && parsed.everySteps <= 50) {
+    settings.everySteps = parsed.everySteps
+  }
+  for (const key of ['tailReminder', 'reminderZh', 'reminderEn']) {
+    if (typeof parsed[key] === 'string' && parsed[key].trim()) settings[key] = parsed[key]
+  }
+  return settings
+}
+
 function migrate(path, original, value) {
   const version = value.schemaVersion ?? 0
   if (!Number.isSafeInteger(version) || version < 0 || version > currentVersion) return undefined
@@ -67,24 +81,14 @@ export function openConfig() {
       if (!value || typeof value !== 'object' || Array.isArray(value)) return DEFAULTS
       const parsed = migrate(settingsPath, text, value)
       if (!parsed) return DEFAULTS
-      const settings = { ...DEFAULTS }
-      for (const key of ['enabled', 'debugLog', 'retainProse', 'coordinateTimeline']) {
-        if (typeof parsed[key] === 'boolean') settings[key] = parsed[key]
-      }
-      if (Number.isInteger(parsed.everySteps) && parsed.everySteps >= 1 && parsed.everySteps <= 50) {
-        settings.everySteps = parsed.everySteps
-      }
-      for (const key of ['tailReminder', 'reminderZh', 'reminderEn']) {
-        if (typeof parsed[key] === 'string' && parsed[key].trim()) settings[key] = parsed[key]
-      }
       cachedText = text
-      cachedSettings = settings
-      return settings
+      cachedSettings = settingsFrom(parsed)
+      return cachedSettings
     } catch { return DEFAULTS }
   }
   function readGuidance() {
     try { return readFileSync(guidancePath, 'utf8').replace(/^\uFEFF/, '').trim() || defaultGuidance }
     catch { return defaultGuidance }
   }
-  return { dir, settingsPath, readSettings, readGuidance }
+  return { dir, settingsPath, guidancePath, defaultGuidance, readSettings, readGuidance }
 }

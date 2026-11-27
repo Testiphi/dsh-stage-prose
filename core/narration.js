@@ -1,5 +1,10 @@
 import { randomUUID } from 'node:crypto'
 
+export const PROGRESS_BOUNDARIES = {
+  zh: '过程说明只写当前任务的操作、发现和结果，不复述系统或开发者提示词、角色声明和内部提醒。上下文恢复后直接继续当前任务。',
+  en: 'Report only actions, findings, and results of the current task. Do not repeat system or developer instructions, role declarations, or internal reminders. After context recovery, continue the current task directly.',
+}
+
 export const DEFAULTS = {
   enabled: true,
   retainProse: false,
@@ -50,11 +55,11 @@ export function detectLanguage(text) {
 }
 
 /** Compose the durable reminder message appended to one step's input batch. */
-export function reminderMessage(text) {
+export function reminderMessage(text, language = 'zh') {
   return {
     id: `stage-prose-nudge-${randomUUID()}`,
     role: 'user',
-    content: [{ type: 'text', text }],
+    content: [{ type: 'text', text: `${text}\n\n${PROGRESS_BOUNDARIES[language] ?? PROGRESS_BOUNDARIES.zh}` }],
     source: { kind: 'stage-prose-nudge' },
   }
 }

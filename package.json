@@ -32,7 +32,13 @@
     },
     "client": {
       "platform": "web",
-      "immediately": true
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-plugin-manager",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-connection",
+        "@deepseek-ai/dsh-client-locale"
+      ]
     }
   },
   "main": "./index.js",
@@ -65,7 +71,8 @@
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node test/smoke.mjs && node --test test/config.mjs test/contract.mjs",
+    "test": "node test/smoke.mjs && node --test test/config.mjs test/contract.mjs test/settings-api.mjs",
+    "test:settings-web": "node test/settings-web.mjs",
     "prepack": "node scripts/build.mjs --check"
   },
   "devDependencies": {

@@ -1,7 +1,8 @@
 import { appendFileSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { openConfig } from './core/config.js'
-import { detectLanguage, hasReportedText, isSubagent, reminderMessage, sessionKey, userText } from './core/narration.js'
+import { installSettingsApi } from './core/settings-api.js'
+import { PROGRESS_BOUNDARIES, detectLanguage, hasReportedText, isSubagent, reminderMessage, sessionKey, userText } from './core/narration.js'
 
 /** Cordis plugin name. */
 export const name = 'stage-prose'
@@ -52,9 +53,15 @@ function tailOrder(systemPrompt) {
  * @param ctx - host context carrying the prompt registry and the agent events.
  */
 export function apply(ctx) {
-  const { dir, settingsPath, readSettings, readGuidance } = openConfig()
+  const config = openConfig()
+  const { dir, settingsPath, readSettings, readGuidance } = config
   const settings = readSettings()
   const log = createLogger(dir, readSettings)
+  installSettingsApi(ctx, config, () => ({
+    timelineLoaded: [...(ctx.get?.('loader')?.entries() ?? [])].some(entry =>
+      !entry.disabled && ['@deepseek-ai/dsh-timeline', '@magolor/dsh-timeline'].includes(entry.options.name.replace(/^cordis:/u, ''))
+    ),
+  }))
 
   ctx.effect(() => ctx.on('webserver/index-inject', (table) => {
     table.push({ kind: 'global', name: '__DSH_STAGE_PROSE__', value: { retainProse: readSettings().retainProse } })
@@ -69,7 +76,7 @@ export function apply(ctx) {
   ctx.effect(() => ctx.systemPrompt.section({
     name: 'deployment:stage-report-tail',
     order: tailOrder(ctx.systemPrompt),
-    text: () => readSettings().tailReminder,
+    text: () => `${readSettings().tailReminder}\n\n${PROGRESS_BOUNDARIES.zh}`,
   }), 'stage-prose.tail()')
 
   /** Per-session narration facts: silent steps since the last written update, and interface language. */
@@ -129,7 +136,7 @@ export function apply(ctx) {
     if (state === undefined) return decision
     if (state.silent < current.everySteps) return decision
     const text = state.lang === 'en' ? current.reminderEn : current.reminderZh
-    const message = reminderMessage(text)
+    const message = reminderMessage(text, state.lang)
     state.silent = 0
     log(`nudge session=${sessionKey(session).slice(0, 8)} turn=${payload.turn} step=${payload.step} everySteps=${current.everySteps} lang=${state.lang}`)
     return { ...decision, messages: [...decision.messages, message] }

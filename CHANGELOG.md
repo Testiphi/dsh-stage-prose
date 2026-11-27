@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Add a bilingual native plugin settings page with common controls first and prompt/debug controls under Advanced settings. Keep settings.json and guidance.md as the sole source, with hot reload, separate saves, and external-edit conflict protection.
+- Add a fixed output boundary to the tail guidance and localized silent-step reminders so progress text stays focused on task actions and results, including after context recovery. Custom guidance and reminder wording remain configurable.
+
 ## 1.0.0-rc.3
 
 - Refresh bilingual feature introductions and npm discovery metadata, including homepage and issue links.
