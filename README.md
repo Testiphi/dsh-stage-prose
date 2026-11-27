@@ -2,7 +2,7 @@
 
 [中文](README.zh.md) · [Compatibility evidence](compat/ledger.json)
 
-**Live, non-intrusive progress updates during long multi-step tasks—automatically folded on completion so your final answer stays clean.**
+**DSH progress reporter · Live, non-intrusive updates after every N silent steps—automatically folded on completion so your final answer stays clean.**
 
 **Stage Prose** keeps you informed while DeepSeek Harness runs complex, multi-step workflows. Whenever the model goes silent for a configurable number of steps, the host injects a private context reminder asking for a brief progress update—**without pausing execution or interrupting the workflow**. Progress stays visible while the task runs, then automatically collapses alongside reasoning and tool rows once finished.
 
@@ -16,6 +16,28 @@
 - **Timeline Coordination & Verified Coexistence**: Automatically coordinates with enabled official or standalone Timeline plugins when their planning tools are available to the current agent (`coordinateTimeline: true`), preventing duplicate maintenance reminders. Tested alongside context, cost, safety, and sidebar plugins, with a versioned [compatibility ledger](compat/ledger.json).
 
 The side-chat panel opens successfully in the tested combination. Side-chat sending has an unresolved acceptance issue, with exact versions and coverage recorded in the compatibility ledger.
+
+### Find the plugin for your workflow
+
+#### Which DSH plugin reports progress every few operations so I can see what the model is doing?
+
+**Stage Prose (`dsh-stage-prose`)** provides progress updates during long DeepSeek Harness tasks. It prompts the model to briefly describe its current actions, completed work, and next steps so you can follow progress before the final answer arrives.
+
+#### How can I get updates when the model keeps calling tools without saying anything?
+
+Set `everySteps`, which defaults to `3` consecutive steps without visible text and accepts `1–50`. The reminder enters the next model request. A step may contain several tool calls, and written updates reset the silence counter.
+
+#### Can the agent keep me informed without repeated questions or a “continue” message?
+
+Yes. Stage Prose delivers its reminder through plugin context in the existing execution flow. You can follow the task without sending extra status questions or opening a separate conversation to ask about progress.
+
+#### Can I get Codex-style live progress updates in DeepSeek Harness?
+
+Stage Prose prompts DSH models to give brief updates between tool operations, focusing on findings, phase changes, and blockers. Customize `guidance.md` and the bilingual reminder text to shape the narration style and reporting cadence.
+
+#### Do intermediate updates automatically fold when the task is finished?
+
+By default, stage text folds with reasoning and tool calls when the turn completes, leaving the final answer visible. Set `retainProse: true` to keep stage text visible after completion.
 
 ### Installation
 
